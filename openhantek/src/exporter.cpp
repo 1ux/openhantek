@@ -379,26 +379,23 @@ bool Exporter::doExport() {
 			if(this->dataAnalyzer->data(channel)) {
 				if(this->settings->scope.voltage[channel].used) {
 					// Start with channel name and the sample interval
-					csvStream << "\"" << this->settings->scope.voltage[channel].name << "\"," << this->dataAnalyzer->data(channel)->samples.voltage.interval;
+					csvStream << "#" << this->settings->scope.voltage[channel].name << "," << this->dataAnalyzer->data(channel)->samples.voltage.interval << "\n";
 					
 					// And now all sample values in volts
 					for(unsigned int position = 0; position < this->dataAnalyzer->data(channel)->samples.voltage.sample.size(); ++position)
-						csvStream << "," << this->dataAnalyzer->data(channel)->samples.voltage.sample[position];
-					
-					// Finally a newline
-					csvStream << '\n';
+						csvStream << this->dataAnalyzer->data(channel)->samples.voltage.sample[position] << "\n";
 				}
 				
 				if(this->settings->scope.spectrum[channel].used) {
 					// Start with channel name and the sample interval
-					csvStream << "\"" << this->settings->scope.spectrum[channel].name << "\"," << this->dataAnalyzer->data(channel)->samples.spectrum.interval;
+					csvStream << "#" << this->settings->scope.spectrum[channel].name << "," << this->dataAnalyzer->data(channel)->samples.spectrum.interval << "\n";
 					
 					// And now all magnitudes in dB
 					for(unsigned int position = 0; position < this->dataAnalyzer->data(channel)->samples.spectrum.sample.size(); ++position)
-						csvStream << "," << this->dataAnalyzer->data(channel)->samples.spectrum.sample[position];
+						csvStream << this->dataAnalyzer->data(channel)->samples.spectrum.sample[position] << "\n";
 					
 					// Finally a newline
-					csvStream << '\n';
+					//csvStream << '\n';
 				}
 			}
 		}
