@@ -121,10 +121,11 @@ void GlGenerator::generateGraphs() {
 							std::vector<double>::const_iterator dataIterator = this->dataAnalyzer->data(channel)->samples.voltage.sample.begin();
 							const double gain = this->settings->scope.voltage[channel].gain;
 							const double offset = this->settings->scope.voltage[channel].offset;
+                            const double invert = this->settings->scope.voltage[channel].inverted ? -1.0 : 1.0;
 							
 							for(unsigned int position = 0; position < sampleCount; ++position) {
 								*(glIterator++) = position * horizontalFactor - DIVS_TIME / 2;
-								*(glIterator++) = *(dataIterator++) / gain + offset;
+                                *(glIterator++) = *(dataIterator++) / gain * invert + offset;
 							}
 						}
 						else {
@@ -174,10 +175,13 @@ void GlGenerator::generateGraphs() {
 					const double yGain = this->settings->scope.voltage[yChannel].gain;
 					const double xOffset = this->settings->scope.voltage[xChannel].offset;
 					const double yOffset = this->settings->scope.voltage[yChannel].offset;
+                    const double xInvert = this->settings->scope.voltage[xChannel].inverted ? -1.0 : 1.0;
+                    const double yInvert = this->settings->scope.voltage[yChannel].inverted ? -1.0 : 1.0;
 					
-					for(unsigned int position = 0; position < sampleCount; ++position) {
-						*(glIterator++) = *(xIterator++) / xGain + xOffset;
-						*(glIterator++) = *(yIterator++) / yGain + yOffset;
+					for(unsigned int position = 0; position < sampleCount; ++position) 
+                    {
+                        *(glIterator++) = *(xIterator++) / xGain * xInvert + xOffset;
+                        *(glIterator++) = *(yIterator++) / yGain * yInvert + yOffset;
 					}
 				}
 				else {
