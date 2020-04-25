@@ -91,8 +91,7 @@ struct DsoSettingsOptions {
 struct DsoSettingsScopeHorizontal {
 	Dso::GraphFormat format; ///< Graph drawing mode of the scope
 	double frequencybase; ///< Frequencybase in Hz/div
-	double marker[MARKER_COUNT]; ///< Marker positions in div
-	bool marker_visible[MARKER_COUNT];
+	double marker[2]; ///< Marker positions in div
 	double timebase; ///< Timebase in s/div
 	unsigned int recordLength; ///< Sample count
 	double samplerate; ///< The samplerate of the oscilloscope in S
